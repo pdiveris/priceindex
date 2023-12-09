@@ -1,0 +1,17 @@
+/node_modules
+/public/storage
+/public/js/*
+/public/css/*
+public/*.*.js
+/vendor
+/.idea
+.env
+public/mix-manifest.json
+public/.DS*
+media/.DS*
+._*
+media/*
+public/mix-manifest.json
+foxx/*.zip
+vessel
+.env.*
