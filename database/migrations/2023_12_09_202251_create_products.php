@@ -31,6 +31,10 @@ return new class extends Migration
                 ]
             );
 
+            $table->tinyInteger('enabled')
+                ->default(1)
+                ->nullable(false);
+
             $table->timestamps();
         });
     }
