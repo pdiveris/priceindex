@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name')
                 ->nullable(false);
 
+            $table->text('description')
+                ->nullable(true);
+
             $table->unsignedBigInteger('category')
                 ->nullable(false);
 
