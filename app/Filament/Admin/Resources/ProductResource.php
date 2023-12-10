@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\RetailerResource\Pages;
-use App\Filament\Admin\Resources\RetailerResource\RelationManagers;
-use App\Models\Retailer;
+use App\Filament\Admin\Resources\ProductResource\Pages;
+use App\Filament\Admin\Resources\ProductResource\RelationManagers;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RetailerResource extends Resource
+class ProductResource extends Resource
 {
-    protected static ?string $model = Retailer::class;
+    protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,15 +25,19 @@ class RetailerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('enabled')
-                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('class')
+                Forms\Components\Textarea::make('description')
+                    ->maxLength(65535)
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('category')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('unit')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('logo')
-                    ->maxLength(255),
+                Forms\Components\Toggle::make('enabled')
+                    ->required(),
             ]);
     }
 
@@ -43,9 +47,10 @@ class RetailerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('class')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('logo')
+                Tables\Columns\TextColumn::make('category')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('unit')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('enabled')
                     ->boolean(),
@@ -54,6 +59,10 @@ class RetailerResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -83,9 +92,9 @@ class RetailerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRetailers::route('/'),
-            'create' => Pages\CreateRetailer::route('/create'),
-            'edit' => Pages\EditRetailer::route('/{record}/edit'),
+            'index' => Pages\ListProducts::route('/'),
+            'create' => Pages\CreateProduct::route('/create'),
+            'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
 

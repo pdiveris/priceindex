@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\RetailerResource\Pages;
-use App\Filament\Admin\Resources\RetailerResource\RelationManagers;
-use App\Models\Retailer;
+use App\Filament\Admin\Resources\LanguageResource\Pages;
+use App\Filament\Admin\Resources\LanguageResource\RelationManagers;
+use App\Models\Language;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RetailerResource extends Resource
+class LanguageResource extends Resource
 {
-    protected static ?string $model = Retailer::class;
+    protected static ?string $model = Language::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,15 +25,13 @@ class RetailerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('enabled')
-                    ->required(),
+                Forms\Components\TextInput::make('code')
+                    ->maxLength(8),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('class')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('logo')
-                    ->maxLength(255),
+                Forms\Components\Toggle::make('enabled')
+                ->required(),
             ]);
     }
 
@@ -41,11 +39,9 @@ class RetailerResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('code')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('class')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('logo')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('enabled')
                     ->boolean(),
@@ -59,7 +55,7 @@ class RetailerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -67,8 +63,6 @@ class RetailerResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -83,17 +77,9 @@ class RetailerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRetailers::route('/'),
-            'create' => Pages\CreateRetailer::route('/create'),
-            'edit' => Pages\EditRetailer::route('/{record}/edit'),
+            'index' => Pages\ListLanguages::route('/'),
+            'create' => Pages\CreateLanguage::route('/create'),
+            'edit' => Pages\EditLanguage::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }
