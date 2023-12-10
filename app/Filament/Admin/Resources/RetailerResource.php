@@ -39,14 +39,14 @@ class RetailerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\IconColumn::make('enabled')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('class')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('logo')
                     ->searchable(),
+                Tables\Columns\IconColumn::make('enabled')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
