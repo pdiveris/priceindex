@@ -23,13 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category')
                 ->nullable(false);
 
-            $table->enum(
-                'unit',
-                [
-                    'weight',
-                    'quantity',
-                ]
-            );
+c
 
             $table->tinyInteger('enabled')
                 ->default(1)
