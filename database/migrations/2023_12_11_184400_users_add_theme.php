@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('theme', 20)
-                ->default('light')
-                ->after('language');
+                ->after('language')
+                ->default('light');
         });
     }
 
