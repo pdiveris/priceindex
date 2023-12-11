@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Retailer extends Model
 {
+    protected $fillable = [
+        'name',
+        'class',
+        'logo',
+        'enabled',
+        'enabled',
+    ];
+
     use HasFactory;
     use SoftDeletes;
 }
