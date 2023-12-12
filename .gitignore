@@ -7,8 +7,7 @@ public/*.*.js
 /.idea
 .env
 public/mix-manifest.json
-public/.DS*
-media/.DS*
+.DS_Store
 ._*
 media/*
 public/mix-manifest.json
