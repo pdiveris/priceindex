@@ -4,8 +4,11 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\RetailerResource\Pages;
 use App\Filament\Admin\Resources\RetailerResource\RelationManagers;
+use App\Models\Country;
 use App\Models\Retailer;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,15 +28,20 @@ class RetailerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('enabled')
-                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Select::make('country')
+                    ->label('Country')
+                    ->options(Country::where(['enabled' => 1])->pluck('name', 'alpha_2'))
+                    ->required()
+                    ->searchable(),
                 Forms\Components\TextInput::make('class')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('logo')
-                    ->maxLength(255),
+                FileUpload::make('logo')
+                    ->preserveFilenames(),
+                Forms\Components\Toggle::make('enabled')
+                    ->required(),
             ]);
     }
 
@@ -42,6 +50,8 @@ class RetailerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('country')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('class')
                     ->searchable(),

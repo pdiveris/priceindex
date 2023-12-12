@@ -10,6 +10,7 @@ class Retailer extends Model
 {
     protected $fillable = [
         'name',
+        'country',
         'class',
         'logo',
         'enabled',
