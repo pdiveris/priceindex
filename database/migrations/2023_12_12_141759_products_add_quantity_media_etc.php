@@ -9,10 +9,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->decimal('quantity')
-                ->after('unit')
-                ->nullable();
-
             $table->text('media')
                 ->after('quantity')
                 ->nullable();
@@ -25,7 +21,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('quantity');
             $table->dropColumn('media');
         });
     }
