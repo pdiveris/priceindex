@@ -21,7 +21,6 @@ return new class extends Migration
                 ->nullable(true);
 
             $table->text('media')
-                ->default('')
                 ->comment('Images and other media associated with the category')
                 ->nullable(true);
 
