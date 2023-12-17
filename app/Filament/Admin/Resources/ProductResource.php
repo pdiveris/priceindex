@@ -7,6 +7,7 @@ use App\Filament\Admin\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
+use App\Models\Unit;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
@@ -49,8 +50,9 @@ class ProductResource extends Resource
                     ->options(Category::where(['enabled' => 1])->pluck('name', 'id'))
                     ->required()
                     ->searchable(),
-                Forms\Components\TextInput::make('unit')
-                    ->maxLength(255),
+                Select::make('unit')
+                    ->options(Unit::all()->pluck('unit', 'id'))
+                    ->required(),
                 Forms\Components\Toggle::make('enabled')
                     ->required(),
             ]);
