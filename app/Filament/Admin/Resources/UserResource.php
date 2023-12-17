@@ -39,6 +39,8 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(20)
                     ->default('en'),
+                Forms\Components\Toggle::make('enabled')
+                    ->required(),
             ]);
     }
 
@@ -55,6 +57,8 @@ class UserResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('language')
                     ->searchable(),
+                Tables\Columns\IconColumn::make('enabled')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
