@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\ProductResource\Pages;
 use App\Filament\Admin\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
@@ -14,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductResource extends Resource
@@ -35,8 +37,13 @@ class ProductResource extends Resource
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 TagsInput::make('product_tags')
+                    ->suggestions(
+                        Tag::all()->pluck('tag')->toArray(),
+                    )
+                    ->saveRelationshipsUsing(function (Model $record, $state) {
+                        $record->tags()->sync(Tag::whereIn('tag', $state)->pluck('id'));
+                    })
                     ->columnSpanFull(),
-
                 Select::make('category')
                     ->label('Category')
                     ->options(Category::where(['enabled' => 1])->pluck('name', 'id'))
@@ -56,9 +63,12 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('product_category')
+                    ->label('Category')
+                    ->sortable(query: function (Builder $query, string $direction): Builder {
+                        return $query
+                            ->orderBy('category', $direction);
+                    }),
                 Tables\Columns\TextColumn::make('unit')
                     ->sortable()
                     ->searchable(),
@@ -96,7 +106,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+          //  RelationManagers\CategoryRelationManager::class,
         ];
     }
 
