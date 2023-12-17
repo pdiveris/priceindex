@@ -34,6 +34,7 @@ class UnitResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('unit')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
