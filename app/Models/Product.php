@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
@@ -36,6 +37,11 @@ class Product extends Model
     public function category(): HasOne
     {
         return $this->hasOne(Category::class,'id','category');
+    }
+
+    public function unit(): HasOne
+    {
+        return $this->hasOne(Unit::class,'id','unit');
     }
 
     public function tags(): BelongsToMany

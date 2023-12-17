@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('language', 20)
-                ->default('en')
-                ->after('password')
+        Schema::table('products', function (Blueprint $table) {
+            $table->unsignedBigInteger('unit')
                 ->change();
         });
     }
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+
     }
 };
