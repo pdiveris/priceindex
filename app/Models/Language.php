@@ -16,5 +16,4 @@ class Language extends Model
     {
         return $this->hasMany(ProductTranslation::class);
     }
-
 }

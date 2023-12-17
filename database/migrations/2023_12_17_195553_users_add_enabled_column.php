@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('language', 20)
-                ->default('en')
-                ->after('password')
-                ->change();
+            $table->tinyInteger('enabled')
+                ->after('email_verified_at')
+                ->nullable()
+                ->default(0);
         });
     }
 
@@ -24,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('enabled');
+        });
     }
 };
