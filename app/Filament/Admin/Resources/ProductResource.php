@@ -4,13 +4,18 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\ProductResource\Pages;
 use App\Filament\Admin\Resources\ProductResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductResource extends Resource
@@ -31,9 +36,19 @@ class ProductResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('category')
+                TagsInput::make('product_tags')
+                    ->suggestions(
+                        Tag::all()->pluck('tag')->toArray(),
+                    )
+                    ->saveRelationshipsUsing(function (Model $record, $state) {
+                        $record->tags()->sync(Tag::whereIn('tag', $state)->pluck('id'));
+                    })
+                    ->columnSpanFull(),
+                Select::make('category')
+                    ->label('Category')
+                    ->options(Category::where(['enabled' => 1])->pluck('name', 'id'))
                     ->required()
-                    ->numeric(),
+                    ->searchable(),
                 Forms\Components\TextInput::make('unit')
                     ->maxLength(255),
                 Forms\Components\Toggle::make('enabled')
@@ -46,11 +61,16 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('product_category')
+                    ->label('Category')
+                    ->sortable(query: function (Builder $query, string $direction): Builder {
+                        return $query
+                            ->orderBy('category', $direction);
+                    }),
                 Tables\Columns\TextColumn::make('unit')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\IconColumn::make('enabled')
                     ->boolean(),
@@ -73,6 +93,7 @@ class ProductResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
+            ->defaultSort('name')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -85,7 +106,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+          //  RelationManagers\CategoryRelationManager::class,
         ];
     }
 

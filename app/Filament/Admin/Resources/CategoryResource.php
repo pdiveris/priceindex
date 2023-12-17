@@ -2,13 +2,10 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\RetailerResource\Pages;
-use App\Filament\Admin\Resources\RetailerResource\RelationManagers;
-use App\Models\Country;
-use App\Models\Retailer;
+use App\Filament\Admin\Resources\CategoryResource\Pages;
+use App\Filament\Admin\Resources\CategoryResource\RelationManagers;
+use App\Models\Category;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,13 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RetailerResource extends Resource
+class CategoryResource extends Resource
 {
-    protected static ?string $model = Retailer::class;
+    protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
@@ -31,17 +26,13 @@ class RetailerResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Select::make('country')
-                    ->label('Country')
-                    ->options(Country::where(['enabled' => 1])->pluck('name', 'alpha_2'))
-                    ->required()
-                    ->searchable(),
-                Forms\Components\TextInput::make('class')
-                    ->maxLength(255),
-                FileUpload::make('logo')
-                    ->preserveFilenames(),
-                Forms\Components\Toggle::make('enabled')
-                    ->required(),
+                Forms\Components\Textarea::make('description')
+                    ->maxLength(65535)
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('media')
+                    ->maxLength(65535)
+                    ->columnSpanFull(),
+                Forms\Components\Toggle::make('enabled'),
             ]);
     }
 
@@ -52,21 +43,18 @@ class RetailerResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('country')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('class')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('logo')
-                    ->searchable(),
                 Tables\Columns\IconColumn::make('enabled')
+                    ->sortable()
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -97,9 +85,9 @@ class RetailerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRetailers::route('/'),
-            'create' => Pages\CreateRetailer::route('/create'),
-            'edit' => Pages\EditRetailer::route('/{record}/edit'),
+            'index' => Pages\ListCategories::route('/'),
+            'create' => Pages\CreateCategory::route('/create'),
+            'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
 
@@ -110,4 +98,5 @@ class RetailerResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
 }

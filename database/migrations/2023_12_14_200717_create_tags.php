@@ -6,12 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->text('media')
-                ->after('quantity')
-                ->nullable();
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('tag')
+                ->nullable(false);
+
+            $table->timestamps();
         });
     }
 
@@ -20,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('media');
-        });
+        Schema::dropIfExists('tags');
     }
 };

@@ -10,7 +10,7 @@ class ProductTranslation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['lang_id', 'title', 'description'];
+    protected $fillable = ['lang_id', 'product_id', 'title', 'description'];
 
     public function language(): BelongsTo
     {
