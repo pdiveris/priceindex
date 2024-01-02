@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\ProductResource\Pages;
 use App\Filament\Admin\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
+use App\Models\CategorySorted;
 use App\Models\Product;
 use App\Models\Tag;
 use App\Models\Unit;
@@ -47,7 +48,7 @@ class ProductResource extends Resource
                     ->columnSpanFull(),
                 Select::make('category')
                     ->label('Category')
-                    ->options(Category::where(['enabled' => 1])->pluck('name', 'id'))
+                    ->options(CategorySorted::where(['enabled' => 1])->pluck('name', 'id'))
                     ->required()
                     ->searchable(),
                 Select::make('unit')
