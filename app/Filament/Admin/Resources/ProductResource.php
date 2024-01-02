@@ -43,7 +43,20 @@ class ProductResource extends Resource
                         Tag::all()->pluck('tag')->toArray(),
                     )
                     ->saveRelationshipsUsing(function (Model $record, $state) {
-                        $record->tags()->sync(Tag::whereIn('tag', $state)->pluck('id'));
+                        $ids = Tag::whereIn('tag', $state)->pluck('id');
+
+                        $new = array_diff($state, Tag::whereIn("tag", $state)
+                            ->pluck("tag")
+                            ->toArray());
+
+                        foreach ($new as $tagName) {
+                            $tag = new Tag(['tag' => $tagName]);
+                            $tag->save();
+                            $ids[] = $tag->id;
+                        }
+
+                        $record->tags()->sync($ids);
+
                     })
                     ->columnSpanFull(),
                 Select::make('category')
