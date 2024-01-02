@@ -32,7 +32,8 @@ class CategoryResource extends Resource
                 Forms\Components\Textarea::make('media')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\Toggle::make('enabled'),
+                Forms\Components\Toggle::make('enabled')
+                    ->default(1),
             ]);
     }
 

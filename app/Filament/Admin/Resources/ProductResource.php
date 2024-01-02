@@ -68,6 +68,7 @@ class ProductResource extends Resource
                     ->options(Unit::all()->pluck('unit', 'id'))
                     ->required(),
                 Forms\Components\Toggle::make('enabled')
+                    ->default(1)
                     ->required(),
             ]);
     }
