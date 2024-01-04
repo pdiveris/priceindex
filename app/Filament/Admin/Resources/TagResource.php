@@ -62,7 +62,7 @@ class TagResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TagTranslationsRelationManager::class,
         ];
     }
 

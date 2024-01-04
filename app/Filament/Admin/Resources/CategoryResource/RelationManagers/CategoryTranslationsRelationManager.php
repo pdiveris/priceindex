@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Filament\Admin\Resources\ProductResource\RelationManagers;
+namespace App\Filament\Admin\Resources\CategoryResource\RelationManagers;
 
-use App\Models\CategorySorted;
-use App\Models\Language;
 use App\Models\LanguageSorted;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
@@ -14,7 +12,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProductTranslationsRelationManager extends RelationManager
+class CategoryTranslationsRelationManager extends RelationManager
 {
     protected static string $relationship = 'translations';
 
@@ -51,18 +49,9 @@ class ProductTranslationsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(
-                )->mutateFormDataUsing(
-                    function (array $data): array {
-                        return $data;
-                }),
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\CreateAction::make(
-                )->mutateFormDataUsing(
-                    function (array $data): array {
-                        return $data;
-                    }),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

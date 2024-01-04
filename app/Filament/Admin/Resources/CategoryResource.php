@@ -80,7 +80,7 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CategoryTranslationsRelationManager::class,
         ];
     }
 
