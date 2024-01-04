@@ -71,7 +71,7 @@ class Product extends Model
         return $this->translations->where('lang_id', $langId)->first();
     }
 
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         // @TODO: add tags
         // @TODO: add translations
@@ -79,11 +79,12 @@ class Product extends Model
         return [
             'id' => (int) $this->id,
             'name' => $this->name,
-/*            'description' => $this->description,
+            'description' => $this->description,
+            /*
             'category' => $this->product_category,
             'unit' => $this->product_unit,
             'tags' => $this->tags->pluck('tag')->toArray(),
-            'translations' => $this->translations->pluck('name')->toArray(),*/
+            */
         ];
     }
 }

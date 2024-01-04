@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Product;
+use App\Models\Tag;
 
 return [
 
@@ -42,8 +43,6 @@ return [
     | all automatic data syncing will get queued for better performance.
     |
     */
-
-    'queue' => env('SCOUT_QUEUE', true),
 
 /*    'queue' => [
         'connection' => 'redis',
@@ -137,13 +136,18 @@ return [
     */
 
     'meilisearch' => [
-        'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+        'host' => env('MEILISEARCH_HOST', 'http://meilisearch:7700'),
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
             Product::class => [
                 'filterableAttributes'=> ['name'],
                 'sortableAttributes' => ['name'],
                 // Other settings fields...
+            ],
+
+            Tag::class => [
+                'filterableAttributes' => ['id'],
+                'sortableAttributes' => ['tag'],
             ],
         ],
     ],
