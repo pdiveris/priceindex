@@ -36,7 +36,6 @@ class ProductTranslationsRelationManager extends RelationManager
                     ->maxLength(65535)
                     ->columnSpanFull()
                     ->required(),
-
             ]);
     }
 
