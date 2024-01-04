@@ -14,12 +14,14 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\Enums\Alignment;
 use Filament\Tables;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\DB;
+
 
 class ProductResource extends Resource
 {
@@ -62,7 +64,10 @@ class ProductResource extends Resource
                     ->columnSpanFull(),
                 Select::make('category')
                     ->label('Category')
-                    ->options(CategorySorted::where(['enabled' => 1])->pluck('name', 'id'))
+                    ->options(CategorySorted::where(["enabled" => 1])
+                        ->pluck("name", "id")
+                        ->all()
+                    )
                     ->required()
                     ->searchable(),
                 Select::make('unit')
@@ -83,12 +88,32 @@ class ProductResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('product_category')
                     ->label('Category')
+                    ->searchable(query: function (Builder $query, $search): Builder {
+                        return $query->whereIn(
+                            'category',
+                            DB::table("categories")
+                                ->where("name", "like",
+                                    str_replace('c:', '', "$search%")
+                                )
+                                ->pluck("id")
+                        );
+                    })
                     ->sortable(query: function (Builder $query, string $direction): Builder {
                         return $query
                             ->orderBy('category', $direction);
                     }),
                 Tables\Columns\TextColumn::make('product_unit')
                     ->label('Unit')
+                    ->searchable(query: function (Builder $query, $search): Builder {
+                        return $query->whereIn(
+                            'unit',
+                            DB::table("units")
+                                ->where("unit", "like",
+                                    str_replace('u:', '', "$search%")
+                                )
+                                ->pluck("id")
+                        );
+                    })
                     ->sortable(query: function (Builder $query, string $direction): Builder {
                         return $query
                             ->orderBy('unit', $direction);
@@ -128,7 +153,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-          //  RelationManagers\CategoryRelationManager::class,
+          RelationManagers\ProductTranslationsRelationManager::class,
         ];
     }
 
