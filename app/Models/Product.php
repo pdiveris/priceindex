@@ -27,6 +27,7 @@ class Product extends Model
     protected $appends = [
         'product_tags',
         'product_category',
+        'product_unit'
     ];
 
     public function translations(): HasMany
@@ -51,7 +52,12 @@ class Product extends Model
 
     public function getProductCategoryAttribute(): string
     {
-        return $this->category()->first()->name;
+        return $this->category()->first()->name ?? '';
+    }
+
+    public function getProductUnitAttribute(): string
+    {
+        return $this->unit()->first()->unit ?? '';
     }
 
     public function getProductTagsAttribute(): Collection
@@ -63,5 +69,4 @@ class Product extends Model
     {
         return $this->translations->where('lang_id', $langId)->first();
     }
-
 }

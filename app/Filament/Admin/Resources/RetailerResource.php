@@ -61,6 +61,7 @@ class RetailerResource extends Resource
                 Tables\Columns\TextColumn::make('logo')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('enabled')
+                    ->alignCenter()
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

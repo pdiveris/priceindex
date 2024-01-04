@@ -11,11 +11,14 @@
         "php": "^8.1",
         "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
+        "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
+        "laravel/scout": "^10.6",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.0",
-        "livewire/volt": "^1.0"
+        "livewire/volt": "^1.0",
+        "meilisearch/meilisearch-php": "^1.5"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.9",
