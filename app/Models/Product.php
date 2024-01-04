@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use Searchable;
 
     protected $fillable = [
         'name',
@@ -68,5 +69,21 @@ class Product extends Model
     public function translate($langId)
     {
         return $this->translations->where('lang_id', $langId)->first();
+    }
+
+    public function toSearchableArray()
+    {
+        // @TODO: add tags
+        // @TODO: add translations
+
+        return [
+            'id' => (int) $this->id,
+            'name' => $this->name,
+/*            'description' => $this->description,
+            'category' => $this->product_category,
+            'unit' => $this->product_unit,
+            'tags' => $this->tags->pluck('tag')->toArray(),
+            'translations' => $this->translations->pluck('name')->toArray(),*/
+        ];
     }
 }
