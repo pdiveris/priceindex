@@ -8,6 +8,7 @@ use App\Models\Country;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -66,14 +67,18 @@ class CountryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\IconColumn::make('enabled')
+                    ->alignCenter()
                     ->boolean(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('alpha_2')
+                    ->alignCenter()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('alpha_3')
+                    ->alignCenter()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('country_code')
+                    ->alignCenter()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('iso_3166_2')
                     ->searchable(),

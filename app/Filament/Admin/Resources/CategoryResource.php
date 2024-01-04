@@ -45,6 +45,7 @@ class CategoryResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\IconColumn::make('enabled')
+                    ->alignCenter()
                     ->sortable()
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')

@@ -14,6 +14,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -86,10 +87,14 @@ class ProductResource extends Resource
                         return $query
                             ->orderBy('category', $direction);
                     }),
-                Tables\Columns\TextColumn::make('unit')
-                    ->sortable()
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('product_unit')
+                    ->label('Unit')
+                    ->sortable(query: function (Builder $query, string $direction): Builder {
+                        return $query
+                            ->orderBy('unit', $direction);
+                    }),
                 Tables\Columns\IconColumn::make('enabled')
+                    ->alignCenter()
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
