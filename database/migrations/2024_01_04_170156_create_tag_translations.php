@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('tag_id');
             $table->unsignedBigInteger('lang_id');
 
-            $table->string('name');
+            $table->string('tag');
 
             $table->foreign('tag_id')
                 ->references('id')
