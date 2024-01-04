@@ -62,7 +62,6 @@ class ProductTranslationsRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(
                 )->mutateFormDataUsing(
                     function (array $data): array {
-                        dump($data);
                         return $data;
                     }),
                 Tables\Actions\EditAction::make(),
