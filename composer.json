@@ -18,7 +18,8 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.0",
         "livewire/volt": "^1.0",
-        "meilisearch/meilisearch-php": "^v1.2.0"
+        "meilisearch/meilisearch-php": "^1.5",
+        "predis/predis": "^2.2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.9",

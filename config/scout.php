@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
 
@@ -43,12 +44,12 @@ return [
     | all automatic data syncing will get queued for better performance.
     |
     */
-
-/*    'queue' => [
+    /*
+    'queue' => [
         'connection' => 'redis',
         'queue' => 'scout'
-    ],*/
-
+    ],
+        */
     /*
     |--------------------------------------------------------------------------
     | Database Transactions
@@ -140,15 +141,17 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
             Product::class => [
-                'filterableAttributes'=> ['name'],
-                'sortableAttributes' => ['name'],
-                // Other settings fields...
+                'filterableAttributes'=> ['id', 'name', 'description', 'product_category'],
+                'sortableAttributes' => ['id', 'name', 'description', 'product_category' ],
             ],
-
             Tag::class => [
-                'filterableAttributes' => ['id'],
+                'filterableAttributes' => ['id', 'tag'],
                 'sortableAttributes' => ['tag'],
             ],
+            Category::class => [
+                'filterableAttributes'=> ['id', 'name'],
+                'sortableAttributes' => ['id', 'name'],
+            ]
         ],
     ],
 

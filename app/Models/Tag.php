@@ -6,16 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
 
 class Tag extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     use Searchable;
 
     protected $fillable = [
-        'id', 'tag',
+        'id', 'tag', 'deleted_at',
     ];
 
     public function products(): BelongsToMany
@@ -30,9 +32,9 @@ class Tag extends Model
 
     public function toSearchableArray(): array
     {
-        // All model attributes are made searchable
-        $array = $this->toArray();
-
-        return $array;
+        return [
+            'id' => (int) $this->id,
+            'tag' => $this->name,
+        ];
     }
 }
