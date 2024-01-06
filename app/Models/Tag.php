@@ -16,6 +16,10 @@ class Tag extends Model
     use SoftDeletes;
     use Searchable;
 
+    protected $appends = [
+        'tag_translations',
+    ];
+
     protected $fillable = [
         'id', 'tag', 'deleted_at',
     ];
@@ -30,11 +34,23 @@ class Tag extends Model
         return $this->hasMany(TagTranslation::class);
     }
 
+    public function getTagTranslationsAttribute(): array
+    {
+        $ret = [];
+        foreach ($this->translations->all() as $id => $translation) {
+            $ret[$translation->lang_id] = [
+                'tag' => $translation->tag,
+            ];
+        }
+        return $ret;
+    }
+
     public function toSearchableArray(): array
     {
         return [
             'id' => (int) $this->id,
             'tag' => $this->name,
+            'tag_translations' => $this->tag_translations,
         ];
     }
 }

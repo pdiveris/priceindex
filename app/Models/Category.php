@@ -15,6 +15,10 @@ class Category extends Model
     use SoftDeletes;
     use Searchable;
 
+    protected $appends = [
+        'category_translations',
+    ];
+
     protected $fillable = ['id', 'name', 'description', 'media', 'enabled'];
 
     public function translations(): HasMany
@@ -22,11 +26,24 @@ class Category extends Model
         return $this->hasMany(CategoryTranslation::class);
     }
 
+    public function getCategoryTranslationsAttribute(): array
+    {
+        $ret = [];
+        foreach ($this->translations->all() as $id => $translation) {
+            $ret[$translation->lang_id] = [
+                'name' => $translation->name,
+                'description' => $translation->description,
+            ];
+        }
+        return $ret;
+    }
+
     public function toSearchableArray(): array
     {
         return [
             'id' => (int) $this->id,
             'name' => $this->name,
+            'category_translations' => $this->category_translations,
         ];
     }
 
