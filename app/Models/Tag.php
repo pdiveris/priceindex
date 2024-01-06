@@ -49,7 +49,7 @@ class Tag extends Model
     {
         return [
             'id' => (int) $this->id,
-            'tag' => $this->name,
+            'tag' => $this->tag,
             'tag_translations' => $this->tag_translations,
         ];
     }
