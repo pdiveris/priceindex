@@ -29,7 +29,7 @@ class Product extends Model
         'product_tags',
         'product_category',
         'product_translations',
-        'product_unit'
+        'product_unit',
     ];
 
     public function translations(): HasMany
