@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
 
-
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
@@ -115,6 +114,12 @@ class ProductResource extends Resource
                     ->sortable(query: function (Builder $query, string $direction): Builder {
                         return $query
                             ->orderBy('unit', $direction);
+                    }),
+                Tables\Columns\TextColumn::make('translations')
+                    ->label('Translations')
+                    ->alignCenter()
+                    ->getStateUsing(function(Model $record) {
+                        return count($record->translations);
                     }),
                 Tables\Columns\IconColumn::make('enabled')
                     ->alignCenter()
