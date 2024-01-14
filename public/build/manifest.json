@@ -1,11 +1,16 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-f22c37b9.css",
+    "file": "assets/app-946014b2.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
+  "resources/css/themes/landwind.css": {
+    "file": "assets/landwind-bf2794ca.css",
+    "isEntry": true,
+    "src": "resources/css/themes/landwind.css"
+  },
   "resources/js/app.js": {
-    "file": "assets/app-ddee773b.js",
+    "file": "assets/app-07b7e795.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
