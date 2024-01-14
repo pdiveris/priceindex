@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\ProductResource\Pages;
 use App\Filament\Admin\Resources\ProductResource\RelationManagers;
 use App\Models\CategorySorted;
 use App\Models\Product;
+use App\Models\ProductView;
 use App\Models\Tag;
 use App\Models\Unit;
 use Filament\Forms;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
+
 
 class ProductResource extends Resource
 {
@@ -115,12 +117,12 @@ class ProductResource extends Resource
                         return $query
                             ->orderBy('unit', $direction);
                     }),
-                Tables\Columns\TextColumn::make('translations')
+                Tables\Columns\TextColumn::make('num_translations')
+                    ->getStateUsing(function (Builder $query, $record): int {
+                        return ProductView::find($record->id)->num_translations;
+                    })
                     ->label('Translations')
-                    ->alignCenter()
-                    ->getStateUsing(function(Model $record) {
-                        return count($record->translations);
-                    }),
+                    ->alignCenter(),
                 Tables\Columns\IconColumn::make('enabled')
                     ->alignCenter()
                     ->boolean(),
