@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Tag;
+
 return [
 
     /*
@@ -40,14 +44,12 @@ return [
     | all automatic data syncing will get queued for better performance.
     |
     */
-
-    // 'queue' => env('SCOUT_QUEUE', true),
-
+    /*
     'queue' => [
         'connection' => 'redis',
         'queue' => 'scout'
     ],
-
+        */
     /*
     |--------------------------------------------------------------------------
     | Database Transactions
@@ -135,12 +137,27 @@ return [
     */
 
     'meilisearch' => [
-        'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+        'host' => env('MEILISEARCH_HOST', 'http://meilisearch:7700'),
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
-            // 'users' => [
-            //     'filterableAttributes'=> ['id', 'name', 'email'],
-            // ],
+            Product::class => [
+                'filterableAttributes'=> [
+                    'id',
+                    'name',
+                    'description',
+                    'category',
+                    'product_category'
+                ],
+                'sortableAttributes' => ['id', 'name', 'description', 'product_category' ],
+            ],
+            Tag::class => [
+                'filterableAttributes' => ['id', 'tag'],
+                'sortableAttributes' => ['tag'],
+            ],
+            Category::class => [
+                'filterableAttributes'=> ['id', 'name'],
+                'sortableAttributes' => ['id', 'name'],
+            ]
         ],
     ],
 
