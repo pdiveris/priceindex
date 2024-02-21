@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Laravel</title>
+    <title>{{ env('APP_NAME') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -136,7 +136,7 @@
                 Comparing EU Prices <br>since 2024.
             </h1>
             <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                Lorem Ipsum является текст-заполнитель обычно используется в графических, печать и издательской
+                является текст-заполнитель обычно используется в графических, печать и издательской
                 индустрии для предварительного просмотра макета и визуальных макетах.
             </p>
         </div>
