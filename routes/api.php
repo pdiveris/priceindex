@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('test', function(Request $request) {
+    file_put_contents('/tmp/priceindex', print_r($request->toArray(),1));
+    return $request->toArray();
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
