@@ -77,7 +77,7 @@ class Product extends Model
     public function getProductTranslationsAttribute(): array
     {
         $ret = [];
-        foreach ($this->translations->all() as $id => $translation) {
+        foreach ($this->translations as $i => $translation) {
             $ret[$translation->lang_id] = [
                 'name' => $translation->name,
                 'description' => $translation->description,

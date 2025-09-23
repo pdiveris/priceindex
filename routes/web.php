@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PriceAddController;
+use App\Http\Controllers\PriceSubmitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home');
 
+Route::get('/add', PriceAddController::class)
+    ->middleware(['auth', 'verified'])
+    ->name('price.add');
+
+Route::post('/add', PriceSubmitController::class)
+    ->middleware(['auth', 'verified'])
+    ->name('price.submit');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -24,3 +34,4 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 require __DIR__.'/auth.php';
+
