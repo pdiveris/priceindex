@@ -26,7 +26,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="mb-5">
+{{--        <div class="mb-5">
             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Retailer</label>
             <input
                 type="text"
@@ -36,8 +36,10 @@
                 placeholder="Find or add a retailer"
                 required
             />
-        </div>
+        </div>--}}
+        <div class="mb-5">
         @livewire('retailer-select')
+        </div>
         <div class="mb-5">
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
             <input

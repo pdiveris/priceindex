@@ -12,6 +12,7 @@
         "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
         "http-interop/http-factory-guzzle": "^1.2",
+        "joshhanley/livewire-autocomplete": "^2.1",
         "laravel/framework": "^10.39",
         "laravel/sanctum": "^3.3",
         "laravel/scout": "^10.6",
