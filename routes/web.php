@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PriceAddController;
 use App\Http\Controllers\PriceSubmitController;
+use App\Http\Controllers\QrCodeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,12 @@ Route::get('/add', PriceAddController::class)
 Route::post('/add', PriceSubmitController::class)
     ->middleware(['auth', 'verified'])
     ->name('price.submit');
+
+Route::get('/greeting', function () {
+    return 'Hello World';
+});
+
+Route::get('/qr', [QrCodeController::class, 'show']);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

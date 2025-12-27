@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Language;
 use App\Models\Product;
+use App\Models\Retailer;
 use App\Models\Tag;
 
 return [
@@ -157,7 +159,15 @@ return [
             Category::class => [
                 'filterableAttributes'=> ['id', 'name'],
                 'sortableAttributes' => ['id', 'name'],
-            ]
+            ],
+            Language::class => [
+                'filterableAttributes' => ['id', 'name', 'code'],
+                'sortableAttributes' => ['tag', 'code'],
+            ],
+            Retailer::class => [
+                'filterableAttributes' => ['id', 'name', 'class'],
+                'sortableAttributes' => ['tag', 'name', 'class'],
+            ],
         ],
     ],
 

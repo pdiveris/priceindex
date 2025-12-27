@@ -43,7 +43,7 @@ class RetailerSelect extends Component
 
     public function getRetailers(): void
     {
-        $this->users = Retailer::query()
+        $this->retailers = Retailer::query()
             ->when($this->name, function ($query, $name) {
                 return $query->where('name', 'LIKE', '%' . $name . '%');
             })

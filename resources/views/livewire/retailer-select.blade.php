@@ -38,8 +38,8 @@
                 ]
             " />
         </div>
-{{--        <h1 class="font-bold">Selected Retailer</h1>
+        <h1 class="font-bold">Selected Retailer</h1>
         <p>ID: {{ $retailer->id ?? '' }}</p>
-        <p>Name: {{ $retailer->name ?? null }}</p>--}}
+        <p>Name: {{ $retailer->name ?? null }}</p>
     </div>
 </div>
